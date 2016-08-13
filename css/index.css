@@ -1,0 +1,54 @@
+
+/* Header */
+header {
+  height: 21.5vh;
+  min-width: 350px;
+  margin-left: 5px;
+}
+header section {
+  margin-left: 10px;
+  min-width: 320px;
+}
+header section h2 {
+  padding: 5px;
+}
+header section div p {
+  margin: 0px;
+}
+
+#signout {
+  float: right;
+}
+/* Display Tweets */
+aside h3 {
+  height: 10%;
+  margin-left: 14px;
+}
+aside section {
+  width: 100%;
+  height: 90%;
+  overflow-y: scroll;
+}
+aside {
+  width: 30%;
+  float: right;
+  height: 78.5vh;
+}
+
+article {
+  margin-left: 14px;
+  display: block;
+}
+article h4 {
+  padding: 5px 0px 0px 5px;
+}
+
+/* Map */
+.map {
+  height: 78.5vh;
+  width: 70%;
+}
+/* Utility */
+.hidden {
+  display: none;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="twitter_map_view">
+  <head>
+    <meta charset="utf-8">
+    <title>Twitter Map View</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/picnicss/6.1.1/picnic.min.css" title="Picnic" charset="utf-8">
+    <link rel="stylesheet" href="../twitter_maps/css/index.css" charset="utf-8">
+  </head>
+  <body ng-controller="service_controller">
+
+    <header class="flex three">
+      <section>
+        <h2>Twitter Map View</h2>
+        <form id="search" class="hidden">
+          <input class="stack" name="location" placeholder="Search a location" ng-model="location">
+          <button type="submit" class="stack" ng-click="search(location)">Explore</button>
+        </form>
+        <form id="connect" >
+          <button type="submit" class="stack" ng-click="connect()">Connect to twitter</button>
+        </form>
+        <div id="error" class="hidden">
+          <p>
+            An error occured while trying to connect to twitter please try again.
+          </p>
+        </div>
+      </section>
+      <section>
+        <button id="signout" class="hidden" type="submit" ng-click="signout()">Sign Out</button>
+      </section>
+    </header>
+
+
+    <aside>
+      <h3>Tweets</h3>
+      <section>
+        <article class="card" ng-repeat="dtweet in displaytweets">
+          <h4><a href="https://www.twitter.com/{{dtweet.user.screen_name}}" target="_blank">{{dtweet.user.name}}</a></h4>
+          <p ng-bind-html="dtweet.text | tweetLinky:' _blank'"></p>
+        </article>
+      </section>
+    </aside>
+
+    <ng-map class="map" center="[{{ lat }},{{ lng }}]" zoom-to-include-markers='auto'> <!-- -->
+      <marker
+      index="{{ $index }}"
+      position="{{ tweet.coordinates.coordinates[1] }},{{ tweet.coordinates.coordinates[0] }}"
+      ng-repeat="tweet in tweets track by $index"
+      ng-if="tweet.coordinates"
+      title="{{tweet.text}}"
+      on-click="displayTweets(this)"></marker>
+    </ng-map>
+
+    <!-- Google Maps -->
+    <script src="https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places&key=AIzaSyBbRrGh3BHOrlfarVlgDib9-EVXNY90KTQ"></script>
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <!-- ng-Map -->
+    <script src="js/shared/ng-map.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Oauth -->
+    <script src="js/services/oauth.js"></script>
+    <!-- ngSanitize -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-sanitize.js"></script>
+    <!-- Modules -->
+    <script src="js/twitter_map_view.js"></script>
+    <!-- Controllers -->
+    <script src="js/controllers/service_controller.js"></script>
+    <!-- Services -->
+    <script src="js/services/twitter.js"></script>
+    <script src="js/services/coordinates.js"></script>
+    <!-- Filters -->
+    <script src="js/filters/twitter_links.js"></script>
+  </body>
+</html>
