@@ -12,9 +12,7 @@ twitter_map_view.controller('service_controller', ['$scope', 'twitter', 'coordin
   $scope.search = function(location) {
     coordinates.getGeocode(location).then(function(geocode) {
       if (geocode === null) {
-        $scope.$apply(function() {
-          $scope.error = true;
-        });
+        $scope.error = true;
         return [];
       } else {
         $scope.error = false;

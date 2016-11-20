@@ -33,7 +33,7 @@
     <aside>
       <h3>Tweets</h3>
       <section>
-        <article class="card" ng-if="error">
+        <article class="card" ng-show="error">
           <h4 class="error">No tweets were found for your search</h4>
         </article>
         <article class="card" ng-repeat="dtweet in displaytweets">
