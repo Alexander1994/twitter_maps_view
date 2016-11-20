@@ -8,16 +8,21 @@ twitter_map_view.controller('service_controller', ['$scope', 'twitter', 'coordin
 
   twitter.initialize();
   $scope.error = false;
-  
+
   $scope.search = function(location) {
     coordinates.getGeocode(location).then(function(geocode) {
       if (geocode === null) {
-        $scope.error = true;
+        $scope.$apply(function() {
+          $scope.error = true;
+        });
+        return [];
+      } else {
+        $scope.error = false;
+        $scope.lat = geocode['lat'];
+        $scope.lng = geocode['lng'];
+        return twitter.getTweetsByGeocode(geocode);
       }
-      $scope.error = false;
-      $scope.lat = geocode['lat'];
-      $scope.lng = geocode['lng'];
-      return twitter.getTweetsByGeocode(geocode);
+
     }).then(function(twitter_data) {
       $scope.tweets = [];
       $scope.displaytweets = [];

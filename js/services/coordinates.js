@@ -58,25 +58,30 @@ twitter_map_view.factory('coordinates', ['$http', '$q',  function($http, $q) {
       .then(function(google_data) {
         if (google_data['data']['results'].length == 0) {
           deffered.resolve(null);
+        } else {
+          var location_coordinates = google_data['data']['results'][0]['geometry'];
+          var lat = location_coordinates['location']['lat'];
+          var lng = location_coordinates['location']['lng'];
+          var northeast = location_coordinates['bounds']['northeast'];
+          var southwest = location_coordinates['bounds']['southwest'];
+          var distance = len_between_coordinates(northeast, southwest)/2;
+          var geocode = {
+            lat: lat,
+            lng: lng,
+            distance: distance
+          };
+          deffered.resolve(geocode);
         }
-        var location_coordinates = google_data['data']['results'][0]['geometry'];
-        var lat = location_coordinates['location']['lat'];
-        var lng = location_coordinates['location']['lng'];
-        var northeast = location_coordinates['bounds']['northeast'];
-        var southwest = location_coordinates['bounds']['southwest'];
-        var distance = len_between_coordinates(northeast, southwest)/2;
-        var geocode = {
-          lat: lat,
-          lng: lng,
-          distance: distance
-        };
-        deffered.resolve(geocode);
+
       }, function(err) {
         deffered.reject(err);
       });
       return deffered.promise;
     },
     standardizeCoordinates: function(twitter_data, lat, lng) {
+      if (twitter_data.length == 0) {
+        return [];
+      }
       var tweets = twitter_data['statuses'];
       var curr_tweet = {};
       var bounding_box = [];
