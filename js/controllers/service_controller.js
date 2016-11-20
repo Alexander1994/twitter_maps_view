@@ -7,9 +7,14 @@ twitter_map_view.controller('service_controller', ['$scope', 'twitter', 'coordin
   $scope.lng = 131.04;
 
   twitter.initialize();
-
+  $scope.error = false;
+  
   $scope.search = function(location) {
     coordinates.getGeocode(location).then(function(geocode) {
+      if (geocode === null) {
+        $scope.error = true;
+      }
+      $scope.error = false;
       $scope.lat = geocode['lat'];
       $scope.lng = geocode['lng'];
       return twitter.getTweetsByGeocode(geocode);

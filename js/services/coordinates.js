@@ -56,6 +56,9 @@ twitter_map_view.factory('coordinates', ['$http', '$q',  function($http, $q) {
       var url_encoded_loc = encodeURIComponent(location);
       $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+ url_encoded_loc)
       .then(function(google_data) {
+        if (google_data['data']['results'].length == 0) {
+          deffered.resolve(null);
+        }
         var location_coordinates = google_data['data']['results'][0]['geometry'];
         var lat = location_coordinates['location']['lat'];
         var lng = location_coordinates['location']['lng'];

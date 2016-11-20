@@ -52,3 +52,6 @@ article h4 {
 .hidden {
   display: none;
 }
+.error {
+  color: #a94442;
+}

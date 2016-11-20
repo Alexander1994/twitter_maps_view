@@ -33,6 +33,9 @@
     <aside>
       <h3>Tweets</h3>
       <section>
+        <article class="card" ng-if="error">
+          <h4 class="error">No tweets were found for your search</h4>
+        </article>
         <article class="card" ng-repeat="dtweet in displaytweets">
           <h4><a href="https://www.twitter.com/{{dtweet.user.screen_name}}" target="_blank">{{dtweet.user.name}}</a></h4>
           <p ng-bind-html="dtweet.text | tweetLinky:' _blank'"></p>
